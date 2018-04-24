@@ -27,11 +27,11 @@ Banner photo by [Karsten Würth (@inf1783)](https://unsplash.com/photos/K1v-HLUb
 
 = How do I check if my website is hosted green? =
 
-You can check if your website is hosted green at: https://www.thegreenwebfoundation.org/ The widget will show your website as "grey" if you don't have a green host.
+You can check if your website is hosted green at: [https://www.thegreenwebfoundation.org/](https://www.thegreenwebfoundation.org/) The widget will show your website as "grey" if you don't have a green host.
 
 = How can I find a green host? =
 
-Check out The Green Web Foundation's worldwide directory of green hosts at: https://www.thegreenwebfoundation.org/directory/
+Check out The Green Web Foundation's worldwide directory of green hosts at: [https://www.thegreenwebfoundation.org/directory/](https://www.thegreenwebfoundation.org/directory/)
 
 == Screenshots ==
 
