@@ -13,9 +13,9 @@ function wporg_settings_init() {
 
  // register a new section in the "wporg" page
  add_settings_section(
- 'wporg_section_developers',
+ 'tgwf_section_carbon_txt',
  __( 'Carbon.txt', 'tgwf' ),
- 'wporg_section_developers_cb',
+ 'tgwf_section_carbon_txt_cb',
  'tgwf'
  );
 
@@ -23,16 +23,54 @@ function wporg_settings_init() {
  add_settings_field(
  'tgwf_primary_upstream_provider',
  __( 'Upstream provider', 'tgwf' ),
- 'wporg_field_pill_cb',
+ 'tgwf_field_upstream_provider_cb',
  'tgwf',
- 'wporg_section_developers',
+ 'tgwf_section_carbon_txt',
  [
- 'label_for' => 'wporg_field_pill',
- 'class' => 'wporg_row',
- 'wporg_custom_data' => 'custom',
+ 'label_for' => 'tgwf_primary_upstream_provider',
+ 'class' => 'tgwf_row',
+ 'tgwf_custom_data' => 'custom',
  ]
  );
+
+ add_settings_field(
+  'tgwf_offset_certificate',
+  __( 'Offset Certificate', 'tgwf' ),
+  'tgwf_field_offset_cert_cb',
+  'tgwf',
+  'tgwf_section_carbon_txt',
+  [
+  'label_for' => 'tgwf_field_offset_cert_cb',
+  'class' => 'tgwf_row',
+  ]
+  );
+
+add_settings_field(
+  'tgwf_offset_expiry',
+  __( 'Offset Certificate Expiry Date', 'tgwf' ),
+  'tgwf_field_offset_expiry_date_cb',
+  'tgwf',
+  'tgwf_section_carbon_txt',
+  [
+  'label_for' => 'tgwf_field_offset_expiry_date_cb',
+  'class' => 'tgwf_row',
+  ]
+  );
+
+
+add_settings_field(
+  'tgwf_show_carbon_txt',
+  __( 'Show carbon.txt', 'tgwf' ),
+  'tgwf_field_show_carbon_txt_cb',
+  'tgwf',
+  'tgwf_section_carbon_txt',
+  [
+  'label_for' => 'tgwf_field_show_carbon_txt_cb',
+  'class' => 'tgwf_row',
+  ]
+  );
 }
+
 
 /**
  * register our wporg_settings_init to the admin_init action hook
@@ -43,13 +81,13 @@ add_action( 'admin_init', 'wporg_settings_init' );
  * custom option and settings:
  * callback functions
  */
- 
+
 // developers section cb
  
 // section callbacks can accept an $args parameter, which is an array.
 // $args have the following keys defined: title, id, callback.
 // the values are defined at the add_settings_section() function.
-function wporg_section_developers_cb( $args ) {
+function tgwf_section_carbon_txt_cb( $args ) {
  ?>
   <p id="<?php echo esc_attr( $args['id'] ); ?>">
     <?php esc_html_e( 'Carbon.txt is a way to show you run your site on renewable power. Fill in the details below, to generate your carbon.txt file', 'tgwf' ); ?>
@@ -58,14 +96,15 @@ function wporg_section_developers_cb( $args ) {
 }
 
 // pill field cb
- 
+
 // field callbacks can accept an $args parameter, which is an array.
 // $args is defined at the add_settings_field() function.
 // wordpress has magic interaction with the following keys: label_for, class.
 // the "label_for" key value is used for the "for" attribute of the <label>.
 // the "class" key value is used for the "class" attribute of the <tr> containing the field.
 // you can add custom key value pairs to be used inside your callbacks.
-function wporg_field_pill_cb( $args ) {
+
+function tgwf_field_upstream_provider_cb( $args ) {
  // get the value of the setting we've registered with register_setting()
  $options = get_option( 'tgwf_options' );
  // output the field
@@ -81,15 +120,78 @@ function wporg_field_pill_cb( $args ) {
   ( '' ); ?>"
   />
 
-
-
  <p class="description">
  <?php esc_html_e( 'If you run a website this is typically your hosting company. If you run a hosting company, this will often be the people running the datacentre for your servers.' , 'tgwf' ); ?>
  <a href="">See more</a>
  </p>
+
  <?php
 }
 
+function tgwf_field_offset_cert_cb( $args ) {
+  // get the value of the setting we've registered with register_setting()
+  $options = get_option( 'tgwf_options' );
+  // output the field
+  ?>
+  <input
+   type="text"
+   id="<?php echo esc_attr( $args['label_for'] ); ?>"
+   name="tgwf_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+   value="<?php echo isset( $options[ $args['label_for'] ] )
+   ?
+   ( $options[ $args['label_for']] )
+   :
+   ( '' ); ?>"
+   />
+   <p class="description">
+    <?php esc_html_e( "If you can't use a green provider, the next best thing is to account for the emissions from your site, by offsetting the emissions." , 'tgwf' ); ?>
+   </p>
+   <?php
+}
+
+function tgwf_field_offset_expiry_date_cb( $args ) {
+  // get the value of the setting we've registered with register_setting()
+  $options = get_option( 'tgwf_options' );
+  // output the field
+  ?>
+  <input
+   type="text"
+   id="<?php echo esc_attr( $args['label_for'] ); ?>"
+   name="tgwf_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+   value="<?php echo isset( $options[ $args['label_for'] ] )
+   ?
+   ( $options[ $args['label_for']] )
+   :
+   ( '' ); ?>"
+   />
+   <p class="description">
+    <?php esc_html_e( "Offsets typically last a year" , 'tgwf' ); ?>
+   </p>
+   <?php
+}
+
+function tgwf_field_show_carbon_txt_cb( $args ) {
+  // get the value of the setting we've registered with register_setting()
+  $options = get_option( 'tgwf_options' );
+  // output the field
+  ?>
+  <select
+    id="<?php echo esc_attr( $args['label_for'] ); ?>"
+    name="tgwf_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
+  >
+    <option value="yes" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'red', false ) ) : ( '' ); ?>>
+      <?php esc_html_e( 'yes', 'tgwf' ); ?>
+    </option>
+    <option value="no" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'red', false ) ) : ( '' ); ?>>
+      <?php esc_html_e( 'no', 'tgwf' ); ?>
+    </option>
+
+  </select>
+   <p class="description">
+    <?php esc_html_e( "Create a carbon.txt at the root of this site?" , 'tgwf' ); ?>
+   </p>
+   <?php
+}
 /**
  * top level menu
  */
