@@ -40,7 +40,7 @@ function wporg_settings_init() {
   'tgwf',
   'tgwf_section_carbon_txt',
   [
-  'label_for' => 'tgwf_field_offset_cert_cb',
+  'label_for' => 'tgwf_field_offset_cert',
   'class' => 'tgwf_row',
   ]
   );
@@ -52,7 +52,7 @@ add_settings_field(
   'tgwf',
   'tgwf_section_carbon_txt',
   [
-  'label_for' => 'tgwf_field_offset_expiry_date_cb',
+  'label_for' => 'tgwf_field_offset_expiry_date',
   'class' => 'tgwf_row',
   ]
   );
@@ -65,7 +65,7 @@ add_settings_field(
   'tgwf',
   'tgwf_section_carbon_txt',
   [
-  'label_for' => 'tgwf_field_show_carbon_txt_cb',
+  'label_for' => 'tgwf_field_show_carbon_txt',
   'class' => 'tgwf_row',
   ]
   );
