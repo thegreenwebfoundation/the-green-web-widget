@@ -25,18 +25,14 @@ if ( ! defined( 'WPINC' ) ) {
  * The core plugin class
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-the-green-web-widget.php';
+require plugin_dir_path( __FILE__ ) . 'includes/settings-page.php';
 
-/**
- * Begins execution of the plugin.
- *
- * @since 0.1.0
- */
+
 function run_the_green_web_widget() {
 
 	add_action( 'widgets_init', function() {
 		register_widget( 'The_Green_Web_Widget' );
 	});
-
 }
 
 run_the_green_web_widget();
