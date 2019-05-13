@@ -192,6 +192,34 @@ function tgwf_field_show_carbon_txt_cb( $args ) {
    </p>
    <?php
 }
+function update_carbon_txt() {
+$access_type = get_filesystem_method();
+if($access_type === 'direct')
+{
+	/* you can safely run request_filesystem_credentials() without any issues and don't need to worry about passing in a URL */
+	$creds = request_filesystem_credentials(site_url() . '/wp-admin/', '', false, false, array());
+
+	/* initialize the API */
+	if ( ! WP_Filesystem($creds) ) {
+		/* any problems and we exit */
+		return false;
+	}
+  $path = get_home_path();
+	global $wp_filesystem;
+  /* do our file manipulations below */
+  $wp_filesystem->put_contents(
+    "$path/carbon.txt",
+    'Example contents of a carbon.txt file here',
+    // FS_CHMOD_FILE // predefined mode settings for WP files
+  );
+}
+else
+{
+	/* don't have direct write access. Prompt user with our notice */
+	add_action('admin_notices', 'you_admin_notice_function');
+}
+}
+
 /**
  * top level menu
  */
@@ -205,12 +233,12 @@ function wporg_options_page() {
  'wporg_options_page_html'
  );
 }
- 
+
 /**
  * register our wporg_options_page to the admin_menu action hook
  */
 add_action( 'admin_menu', 'wporg_options_page' );
- 
+
 /**
  * top level menu:
  * callback functions
@@ -220,16 +248,18 @@ function wporg_options_page_html() {
  if ( ! current_user_can( 'manage_options' ) ) {
  return;
  }
- 
+
  // add error/update messages
- 
+
  // check if the user have submitted the settings
  // wordpress will add the "settings-updated" $_GET parameter to the url
  if ( isset( $_GET['settings-updated'] ) ) {
  // add settings saved message with the class of "updated"
  add_settings_error( 'wporg_messages', 'wporg_message', __( 'Settings Saved', 'tgwf' ), 'updated' );
+
+ update_carbon_txt();
  }
- 
+
  // show error/update messages
  settings_errors( 'wporg_messages' );
  ?>
